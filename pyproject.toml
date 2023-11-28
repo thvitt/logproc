@@ -9,3 +9,8 @@ license = {file = "LICENSE"}
 classifiers = ["License :: OSI Approved :: MIT License"]
 dynamic = ["version", "description"]
 requires-python = ">=3.9"
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "pytest>=7.4.3",
+]

@@ -66,7 +66,7 @@ def execute(
     stdout: OutputHandler | None = None,
     stdout_level: int = logging.INFO,
     stderr: OutputHandler | None = None,
-    stderr_level: int = logging.ERROR,
+    stderr_level: int = logging.WARNING,
 ) -> int:
     """
     Run the given command and log its output as it appears.
@@ -76,18 +76,3 @@ def execute(
     loop = asyncio.get_event_loop()
     rc = loop.run_until_complete(_stream_subprocess(cmd, stdout_cb, stderr_cb))
     return rc
-
-
-if __name__ == "__main__":
-    logging.basicConfig(
-        level=logging.INFO, format="%(name)s\t%(levelname)s\t%(message)s"
-    )
-    print(
-        execute(
-            [
-                "bash",
-                "-c",
-                "echo stdout && sleep 1 && echo stderr 1>&2 && sleep 1 && echo done",
-            ],
-        )
-    )
