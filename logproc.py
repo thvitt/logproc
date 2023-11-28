@@ -75,7 +75,6 @@ def execute(
     stderr_cb = _prepare_output(stderr, default_name=cmd[0], default_level=stderr_level)
     loop = asyncio.get_event_loop()
     rc = loop.run_until_complete(_stream_subprocess(cmd, stdout_cb, stderr_cb))
-    loop.close()
     return rc
 
 
