@@ -20,11 +20,14 @@ LoggerSpec = str | logging.Logger | None
 OutputHandler = OutputCallback | LoggerSpec
 
 
-def proc_logger(logger: LoggerSpec = None, level: int = logging.INFO) -> OutputCallback:
+def proc_logger(
+    prefix: str = "", level: int = logging.INFO, logger: LoggerSpec = None, extra=None
+) -> OutputCallback:
     """
     Creates a callback for execute() that logs to a logger.
 
     Args:
+        prefix: String that will be prepended to each line
         logger: If given, this is either a logger or the name of a logger.
                 If missing, we log to the root logger.
         level: The level at which to log the messages.
@@ -37,7 +40,7 @@ def proc_logger(logger: LoggerSpec = None, level: int = logging.INFO) -> OutputC
     def log(line: bytes | str):
         if isinstance(line, bytes):
             line = line.decode(errors="replace").rstrip()
-        logger.log(level, line)
+        logger.log(level, prefix + line, extra)
 
     return log
 
