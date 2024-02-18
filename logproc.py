@@ -8,7 +8,7 @@ output and standard error. By default, the output is logged at different
 levels, but it is possible to provide a callback for different handling.
 """
 
-__version__ = "0.1.2"
+__version__ = "0.1.3"
 
 
 import asyncio
@@ -40,7 +40,7 @@ def proc_logger(
     def log(line: bytes | str):
         if isinstance(line, bytes):
             line = line.decode(errors="replace").rstrip()
-        logger.log(level, prefix + line, extra)
+        logger.log(level, prefix + line, extra=extra)
 
     return log
 
@@ -64,14 +64,15 @@ async def _stream_subprocess(
 
 
 def _prepare_output(
-    spec: OutputHandler, default_level=logging.INFO, default_name=None
+    spec: OutputHandler, default_level=logging.INFO, default_name: str | None = None
 ) -> OutputCallback:
-    if isinstance(spec, LoggerSpec):
+    if callable(spec):
+        print("Reusing callable spec", repr(spec))
+        return spec
+    else:
         if spec is None:
             spec = default_name
-        return proc_logger(spec, default_level)
-    else:
-        return spec
+        return proc_logger(level=default_level, logger=spec)
 
 
 def execute(
