@@ -7,13 +7,13 @@ in a subprocess and separately live captures the called process’s standard
 output and standard error. By default, the output is logged at different
 levels, but it is possible to provide a callback for different handling.
 """
+
+__version__ = "0.1.2"
+
+
 import asyncio
-import logging
 from collections.abc import Callable, Sequence
-from typing import get_args, cast
-
-
-__version__ = "0.1.3"
+import logging
 
 OutputCallback = Callable[[str | bytes], None]
 LoggerSpec = str | logging.Logger | None
@@ -64,16 +64,14 @@ async def _stream_subprocess(
 
 
 def _prepare_output(
-    spec: OutputHandler,
-    default_level: int = logging.INFO,
-    default_name: str | None = None,
+    spec: OutputHandler, default_level=logging.INFO, default_name=None
 ) -> OutputCallback:
-    if isinstance(spec, get_args(LoggerSpec)):
+    if isinstance(spec, LoggerSpec):
         if spec is None:
             spec = default_name
-        return proc_logger("", default_level, spec)
+        return proc_logger(spec, default_level)
     else:
-        return cast(OutputCallback, spec)
+        return spec
 
 
 def execute(
