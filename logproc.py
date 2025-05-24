@@ -8,7 +8,7 @@ output and standard error. By default, the output is logged at different
 levels, but it is possible to provide a callback for different handling.
 """
 
-__version__ = "0.1.3"
+__version__ = "0.1.4"
 
 
 import asyncio
@@ -111,6 +111,5 @@ def execute(
     """
     stdout_cb = _prepare_output(stdout, default_name=cmd[0], default_level=stdout_level)
     stderr_cb = _prepare_output(stderr, default_name=cmd[0], default_level=stderr_level)
-    loop = asyncio.get_event_loop()
-    rc = loop.run_until_complete(_stream_subprocess(cmd, stdout_cb, stderr_cb, cwd=cwd))
+    rc = asyncio.run(_stream_subprocess(cmd, stdout_cb, stderr_cb, cwd=cwd))
     return rc
