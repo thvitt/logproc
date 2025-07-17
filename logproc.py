@@ -40,7 +40,7 @@ def proc_logger(
     def log(line: bytes | str):
         if isinstance(line, bytes):
             line = line.decode(errors="replace").rstrip()
-        logger.log(level, prefix + line, extra=extra)
+        logger.log(level, prefix + line, stacklevel=10, extra=extra)
 
     return log
 
