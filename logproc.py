@@ -8,7 +8,7 @@ output and standard error. By default, the output is logged at different
 levels, but it is possible to provide a callback for different handling.
 """
 
-__version__ = "0.1.4"
+__version__ = "0.1.5"
 
 
 import asyncio
@@ -54,7 +54,7 @@ async def _stream_subprocess(
     cmd, stdout_cb: OutputCallback, stderr_cb: OutputCallback, cwd=None
 ):
     process = await asyncio.create_subprocess_exec(
-        *cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+        *cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE, cwd=cwd
     )
 
     await asyncio.gather(
