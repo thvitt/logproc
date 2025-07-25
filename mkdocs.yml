@@ -1,0 +1,10 @@
+site_name: My Docs
+theme: readthedocs
+plugins:
+  search:
+  autorefs:
+  mkdocstrings:
+    handlers:
+      python:
+        inventories:
+          - url: https://docs.python.org/3/objects.inv
