@@ -8,7 +8,7 @@ output and standard error. By default, the output is logged at different
 levels, but it is possible to provide a callback for different handling.
 """
 
-__version__ = "0.1.6"
+__version__ = "0.2.0"
 
 
 import asyncio
@@ -64,7 +64,7 @@ async def _stream_subprocess(
 
 
 def _prepare_output(
-    spec: OutputHandler, default_level=logging.INFO, default_name: str | None = None
+    spec: OutputHandler, default_level=logging.INFO, default_name: str | None = None, prefix: str = ""
 ) -> OutputCallback:
     if callable(spec):
         print("Reusing callable spec", repr(spec))
@@ -72,7 +72,7 @@ def _prepare_output(
     else:
         if spec is None:
             spec = default_name
-        return proc_logger(level=default_level, logger=spec)
+        return proc_logger(level=default_level, logger=spec, prefix=prefix)
 
 
 def execute(
@@ -82,6 +82,7 @@ def execute(
     stderr: OutputHandler | None = None,
     stderr_level: int = logging.WARNING,
     cwd=None,
+    prefix: str = ""
 ) -> int:
     """
     Run the given command and log its output as it appears.
@@ -111,7 +112,25 @@ def execute(
         the command’s exit code
 
     """
-    stdout_cb = _prepare_output(stdout, default_name=cmd[0], default_level=stdout_level)
-    stderr_cb = _prepare_output(stderr, default_name=cmd[0], default_level=stderr_level)
-    rc = asyncio.run(_stream_subprocess(cmd, stdout_cb, stderr_cb, cwd=cwd))
+    rc = asyncio.run(aexecute(cmd, stdout, stdout_level, stderr, stderr_level, cwd, prefix))
     return rc
+
+
+async def aexecute(
+    cmd: Sequence[str],
+    stdout: OutputHandler | None = None,
+    stdout_level: int = logging.INFO,
+    stderr: OutputHandler | None = None,
+    stderr_level: int = logging.WARNING,
+    cwd=None,
+    prefix: str = ""
+) -> int:
+    """
+    Run the given command and log its output as it appears.
+
+    See also: execute()
+
+    """
+    stdout_cb = _prepare_output(stdout, default_name=cmd[0], default_level=stdout_level, prefix=prefix)
+    stderr_cb = _prepare_output(stderr, default_name=cmd[0], default_level=stderr_level, prefix=prefix)
+    return await _stream_subprocess(cmd, stdout_cb, stderr_cb, cwd=cwd)
