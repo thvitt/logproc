@@ -11,7 +11,6 @@ __version__ = "0.3.0"
 
 
 import asyncio
-from collections.abc import Callable, Sequence
 import logging
 
 OutputCallback = Callable[[str | bytes], None]

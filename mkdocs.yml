@@ -1,4 +1,4 @@
-site_name: My Docs
+site_name: logproc – Run programs and log their output
 theme: readthedocs
 plugins:
   search:
@@ -8,3 +8,16 @@ plugins:
       python:
         inventories:
           - url: https://docs.python.org/3/objects.inv
+        options:
+          show_root_heading: true
+          show_symbol_type_heading: false
+          show_source: false
+          show_if_no_docstring: false
+          show_labels: true
+          summary: true
+          docstring_section_style: list
+          signature_crossrefs: true
+          modernize_annotations: true
+markdown_extensions:
+  pymdownx.snippets:
+    check_paths: true

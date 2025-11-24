@@ -20,4 +20,5 @@ dev = [
 ]
 docs = [
     "mkdocstrings[python]>=0.30.0",
+    "pymdown-extensions>=10.16",
 ]
