@@ -14,6 +14,16 @@ __version__ = "0.2.0"
 import asyncio
 from collections.abc import Callable, Sequence
 import logging
+from collections.abc import (
+    AsyncGenerator,
+    AsyncIterable,
+    Awaitable,
+    Callable,
+    Iterable,
+    Sequence,
+)
+from os import process_cpu_count
+from typing import TypeVar
 
 OutputCallback = Callable[[str | bytes], None]
 LoggerSpec = str | logging.Logger | None
@@ -134,3 +144,78 @@ async def aexecute(
     stdout_cb = _prepare_output(stdout, default_name=cmd[0], default_level=stdout_level, prefix=prefix)
     stderr_cb = _prepare_output(stderr, default_name=cmd[0], default_level=stderr_level, prefix=prefix)
     return await _stream_subprocess(cmd, stdout_cb, stderr_cb, cwd=cwd)
+
+
+T = TypeVar("T")
+R = TypeVar("R")
+
+
+async def map_unordered(
+    func: Callable[[T], Awaitable[R]],
+    iterable: Iterable[T] | AsyncIterable[T],
+    *,
+    limit: int | None = None,
+) -> AsyncGenerator[R, None]:
+    """
+    Executes the given async function `func` on each item from `iterable`, yielding results as they complete, while limiting the number of concurrent tasks to `limit`.
+    This function will not consume more items from iterable than it can start while maintaining the concurrency limit.
+
+    Args:
+        func: a coroutine function to apply to each item of the given iterable
+        iterable: an iterable or async iterable of items to process
+        limit: Maximum number of concurrent tasks. If None, defaults to the number of CPU cores available to the process.
+
+    Returns:
+        The results of the function calls, in the order they complete.
+
+    See also:
+        https://death.andgravity.com/limit-concurrency
+    """
+    if isinstance(iterable, AsyncIterable):
+        aws = (func(x) async for x in iterable)
+    else:
+        aws = map(func, iterable)
+
+    async for task in limit_concurrency(aws, limit):
+        yield await task
+
+
+async def limit_concurrency(
+    tasks: Iterable[Awaitable[T]] | AsyncIterable[Awaitable[T]],
+    limit: int | None = None,
+) -> AsyncGenerator[asyncio.Task[T], None]:
+    """
+    Run at most `limit` of the given awaitables concurrently, yielding completed tasks as they finish.
+    """
+    if limit is None:
+        limit = process_cpu_count() or 4
+
+    if isinstance(tasks, AsyncIterable):
+        task_iterator = aiter(tasks)
+    else:
+        task_iterator = iter(tasks)
+
+    pending: set[asyncio.Task[T]] = set()
+    not_started = True
+
+    while pending or not_started:
+        while len(pending) < limit or not_started:
+            try:
+                if isinstance(task_iterator, AsyncIterable):
+                    awaitable = await anext(task_iterator)
+                else:
+                    awaitable = next(task_iterator)
+                pending.add(asyncio.ensure_future(awaitable))
+                not_started = False
+            except StopIteration:
+                break
+            except StopAsyncIteration:
+                break
+
+        if not pending:
+            return
+
+        done, pending = await asyncio.wait(pending, return_when=asyncio.FIRST_COMPLETED)
+
+        while done:
+            yield done.pop()
