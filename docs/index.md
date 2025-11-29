@@ -1,3 +1,1 @@
-# logproc
-
-::: logproc
+--8<-- "README.md"
