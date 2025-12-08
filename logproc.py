@@ -20,7 +20,11 @@ from collections.abc import (
     Iterable,
     Sequence,
 )
-from os import process_cpu_count
+
+try:
+    from os import process_cpu_count
+except ImportError:
+    from os import cpu_count as process_cpu_count  # n/a in python < 3.13
 from typing import TypeVar
 
 OutputCallback = Callable[[str | bytes], None]
