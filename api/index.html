@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>API Documentation - logproc – Run programs and log their output</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "API Documentation";
+        var mkdocs_page_input_path = "api.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> logproc – Run programs and log their output
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">logproc</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">API Documentation</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#logproc">logproc</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#logproc.aexecute">aexecute</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#logproc.execute">execute</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#logproc.limit_concurrency">limit_concurrency</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#logproc.map_unordered">map_unordered</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#logproc.proc_logger">proc_logger</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">logproc – Run programs and log their output</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">API Documentation</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="api-documentation">API Documentation</h1>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<h2 id="logproc" class="doc doc-heading">
+            <code>logproc</code>
+
+
+</h2>
+
+    <div class="doc doc-contents first">
+
+        <p>Run a process and log stdin and stdout.</p>
+<p>This experimental module offers a function <code>execute()</code> that runs a commandline
+in a subprocess and separately live captures the called process’s standard
+output and standard error. By default, the output is logged at different
+levels, but it is possible to provide a callback for different handling.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+<p><span class="doc-section-title">Functions:</span></p>
+    <ul>
+          <li class="doc-section-item field-body">
+            <b><code><a class="autorefs autorefs-internal" title="aexecute(cmd, stdout=None, stdout_level=logging.INFO, stderr=None, stderr_level=logging.WARNING, cwd=None, prefix='')
+
+  
+      async
+   (logproc.aexecute)" href="#logproc.aexecute">aexecute</a></code></b>
+            –
+            <div class="doc-md-description">
+              <p>Asynchronously run the given command and log its output as it appears.</p>
+            </div>
+          </li>
+          <li class="doc-section-item field-body">
+            <b><code><a class="autorefs autorefs-internal" title="execute(cmd, stdout=None, stdout_level=logging.INFO, stderr=None, stderr_level=logging.WARNING, cwd=None, prefix='') (logproc.execute)" href="#logproc.execute">execute</a></code></b>
+            –
+            <div class="doc-md-description">
+              <p>Run the given command and log its output as it appears, blocking while the program runs.</p>
+            </div>
+          </li>
+          <li class="doc-section-item field-body">
+            <b><code><a class="autorefs autorefs-internal" title="limit_concurrency(tasks, limit=None)
+
+  
+      async
+   (logproc.limit_concurrency)" href="#logproc.limit_concurrency">limit_concurrency</a></code></b>
+            –
+            <div class="doc-md-description">
+              <p>Run at most <code>limit</code> of the given awaitables concurrently, yielding completed tasks as they finish.</p>
+            </div>
+          </li>
+          <li class="doc-section-item field-body">
+            <b><code><a class="autorefs autorefs-internal" title="map_unordered(func, iterable, *, limit=None)
+
+  
+      async
+   (logproc.map_unordered)" href="#logproc.map_unordered">map_unordered</a></code></b>
+            –
+            <div class="doc-md-description">
+              <p>Executes the given async function <code>func</code> on each item from <code>iterable</code>, yielding results as they complete, while limiting the number of concurrent tasks to <code>limit</code>.</p>
+            </div>
+          </li>
+          <li class="doc-section-item field-body">
+            <b><code><a class="autorefs autorefs-internal" title="proc_logger(prefix='', level=logging.INFO, logger=None, extra=None) (logproc.proc_logger)" href="#logproc.proc_logger">proc_logger</a></code></b>
+            –
+            <div class="doc-md-description">
+              <p>Creates a callback for execute() that logs to a logger.</p>
+            </div>
+          </li>
+    </ul>
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="logproc.aexecute" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">aexecute</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stdout_level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stderr_level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Asynchronously run the given command and log its output as it appears.</p>
+
+
+<details class="description" open>
+  <summary>Description</summary>
+  <p><code>aexecute</code> runs the given command and waits for it to finish. While it
+is running, its stdout and stderr streams are monitored. Each new line
+appearing on these streams are immediately handled.</p>
+<p>The default handlers will log the message from the subprocess to a
+logger that logs using the first member of the cmd sequence as a logger
+name and logging.INFO for stdout and logging.WARNING for stderr output.</p>
+</details>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>cmd</code></b>
+                  (<code><a class="autorefs autorefs-external" title="collections.abc.Sequence" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence">Sequence</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>]</code>)
+              –
+              <div class="doc-md-description">
+                <p>A list of arguments, as in subprocess.run etc.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>stdout</code></b>
+                  (<code><span title="logproc.OutputHandler">OutputHandler</span> | None</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Handlers for the standard output stream. Each of these can be:</p>
+<ul>
+<li>None (the default) to use the default settings</li>
+<li>a logger name</li>
+<li>a <code>logging.Logger</code></li>
+<li>a callback that receives a line as <code>str</code> or <code>bytes</code> as argument and handles that</li>
+</ul>
+              </div>
+            </li>
+            <li>
+              <b><code>stderr</code></b>
+                  (<code><span title="logproc.OutputHandler">OutputHandler</span> | None</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Like stdout, but for standard error.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>stdout_level</code></b>
+                  (<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a></code>, default:
+                      <code><a class="autorefs autorefs-external" title="logging.INFO" href="https://docs.python.org/3/library/logging.html#logging.INFO">INFO</a></code>
+)
+              –
+              <div class="doc-md-description">
+                
+              </div>
+            </li>
+            <li>
+              <b><code>stderr_level</code></b>
+                  (<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a></code>, default:
+                      <code><a class="autorefs autorefs-external" title="logging.WARNING" href="https://docs.python.org/3/library/logging.html#logging.WARNING">WARNING</a></code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Logging levels for the specific output.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>prefix</code></b>
+                  (<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>, default:
+                      <code>&#39;&#39;</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>A string that is prepended to each line before logging.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>        <p>Returns:
+    the command’s exit code</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="logproc.execute" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">execute</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stdout_level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stderr_level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Run the given command and log its output as it appears, blocking while the program runs.</p>
+
+
+<details class="description" open>
+  <summary>Description</summary>
+  <p><code>execute</code> runs the given command and waits for it to finish. While it
+is running, its stdout and stderr streams are monitored. Each new line
+appearing on these streams are immediately handled.</p>
+<p>The default handlers will log the message from the subprocess to a
+logger that logs using the first member of the cmd sequence as a logger
+name and logging.INFO for stdout and logging.WARNING for stderr output.</p>
+</details>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>cmd</code></b>
+                  (<code><a class="autorefs autorefs-external" title="collections.abc.Sequence" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence">Sequence</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>]</code>)
+              –
+              <div class="doc-md-description">
+                <p>A list of arguments, as in subprocess.run etc.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>stdout</code></b>
+                  (<code><span title="logproc.OutputHandler">OutputHandler</span> | None</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Handlers for the standard output stream. Each of these can be:</p>
+<ul>
+<li>None (the default) to use the default settings</li>
+<li>a logger name</li>
+<li>a <code>logging.Logger</code></li>
+<li>a callback that receives a line as <code>str</code> or <code>bytes</code> as argument and handles that</li>
+</ul>
+              </div>
+            </li>
+            <li>
+              <b><code>stderr</code></b>
+                  (<code><span title="logproc.OutputHandler">OutputHandler</span> | None</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Like stdout, but for standard error.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>stdout_level</code></b>
+                  (<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a></code>, default:
+                      <code><a class="autorefs autorefs-external" title="logging.INFO" href="https://docs.python.org/3/library/logging.html#logging.INFO">INFO</a></code>
+)
+              –
+              <div class="doc-md-description">
+                
+              </div>
+            </li>
+            <li>
+              <b><code>stderr_level</code></b>
+                  (<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a></code>, default:
+                      <code><a class="autorefs autorefs-external" title="logging.WARNING" href="https://docs.python.org/3/library/logging.html#logging.WARNING">WARNING</a></code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Logging levels for the specific output.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>prefix</code></b>
+                  (<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>, default:
+                      <code>&#39;&#39;</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>A string that is prepended to each line before logging.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>        <p>Returns:
+    the command’s exit code</p>
+
+
+<details class="see-also" open>
+  <summary>See also</summary>
+  <p>aexecute()</p>
+</details>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="logproc.limit_concurrency" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">limit_concurrency</span><span class="p">(</span><span class="n">tasks</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Run at most <code>limit</code> of the given awaitables concurrently, yielding completed tasks as they finish.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="logproc.map_unordered" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">map_unordered</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterable</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Executes the given async function <code>func</code> on each item from <code>iterable</code>, yielding results as they complete, while limiting the number of concurrent tasks to <code>limit</code>.
+This function will not consume more items from iterable than it can start while maintaining the concurrency limit.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>func</code></b>
+                  (<code><a class="autorefs autorefs-external" title="collections.abc.Callable" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable">Callable</a>[[<span title="logproc.T">T</span>], <a class="autorefs autorefs-external" title="collections.abc.Awaitable" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Awaitable">Awaitable</a>[<span title="logproc.R">R</span>]]</code>)
+              –
+              <div class="doc-md-description">
+                <p>a coroutine function to apply to each item of the given iterable</p>
+              </div>
+            </li>
+            <li>
+              <b><code>iterable</code></b>
+                  (<code><a class="autorefs autorefs-external" title="collections.abc.Iterable" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable">Iterable</a>[<span title="logproc.T">T</span>] | <a class="autorefs autorefs-external" title="collections.abc.AsyncIterable" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.AsyncIterable">AsyncIterable</a>[<span title="logproc.T">T</span>]</code>)
+              –
+              <div class="doc-md-description">
+                <p>an iterable or async iterable of items to process</p>
+              </div>
+            </li>
+            <li>
+              <b><code>limit</code></b>
+                  (<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a> | None</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Maximum number of concurrent tasks. If None, defaults to the number of CPU cores available to the process.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><a class="autorefs autorefs-external" title="collections.abc.AsyncGenerator" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.AsyncGenerator">AsyncGenerator</a>[<span title="logproc.R">R</span>, None]</code>
+              –
+              <div class="doc-md-description">
+                <p>The results of the function calls, in the order they complete.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<details class="see-also" open>
+  <summary>See also</summary>
+  <p>https://death.andgravity.com/limit-concurrency</p>
+</details>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="logproc.proc_logger" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">proc_logger</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Creates a callback for execute() that logs to a logger.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>prefix</code></b>
+                  (<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>, default:
+                      <code>&#39;&#39;</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>String that will be prepended to each line</p>
+              </div>
+            </li>
+            <li>
+              <b><code>logger</code></b>
+                  (<code><span title="logproc.LoggerSpec">LoggerSpec</span></code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>If given, this is either a logger or the name of a logger.
+    If missing, we log to the root logger.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>level</code></b>
+                  (<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a></code>, default:
+                      <code><a class="autorefs autorefs-external" title="logging.INFO" href="https://docs.python.org/3/library/logging.html#logging.INFO">INFO</a></code>
+)
+              –
+              <div class="doc-md-description">
+                <p>The level at which to log the messages.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href=".." class="btn btn-neutral float-left" title="logproc"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href=".." style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
