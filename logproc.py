@@ -7,7 +7,7 @@ output and standard error. By default, the output is logged at different
 levels, but it is possible to provide a callback for different handling.
 """
 
-__version__ = "0.3.0"
+__version__ = "0.3.1"
 
 
 import asyncio
