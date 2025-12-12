@@ -7,7 +7,7 @@ output and standard error. By default, the output is logged at different
 levels, but it is possible to provide a callback for different handling.
 """
 
-__version__ = "0.3.1"
+__version__ = "0.3.2"
 
 
 import asyncio
@@ -63,14 +63,18 @@ async def _read_stream(stream, cb: OutputCallback):
 
 
 async def _stream_subprocess(
-    cmd, stdout_cb: OutputCallback, stderr_cb: OutputCallback, cwd=None
+    cmd, stdout_cb: OutputCallback, stderr_cb: OutputCallback, cwd=None, **kwargs
 ) -> int:
     """
     Runs the process asynchronously and wait until it is finished. When the
     process produces output, the given callbacks are called with each line.
     """
     process = await asyncio.create_subprocess_exec(
-        *cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE, cwd=cwd
+        *cmd,
+        stdout=asyncio.subprocess.PIPE,
+        stderr=asyncio.subprocess.PIPE,
+        cwd=cwd,
+        **kwargs,
     )
 
     await asyncio.gather(
@@ -101,6 +105,7 @@ def execute(
     stderr_level: int = logging.WARNING,
     cwd=None,
     prefix: str = "",
+    **kwargs,
 ) -> int:
     """
     Run the given command and log its output as it appears, blocking while the program runs.
@@ -127,6 +132,7 @@ def execute(
         stdout_level:
         stderr_level: Logging levels for the specific output.
         prefix: A string that is prepended to each line before logging.
+        kwargs: Additional keyword arguments to be passed to [asyncio.create_subprocess_exec][asyncio.create_subprocess_exec]
     Returns:
         the command’s exit code
 
@@ -135,7 +141,7 @@ def execute(
 
     """
     rc = asyncio.run(
-        aexecute(cmd, stdout, stdout_level, stderr, stderr_level, cwd, prefix)
+        aexecute(cmd, stdout, stdout_level, stderr, stderr_level, cwd, prefix, **kwargs)
     )
     return rc
 
@@ -148,6 +154,7 @@ async def aexecute(
     stderr_level: int = logging.WARNING,
     cwd=None,
     prefix: str = "",
+    **kwargs,
 ) -> int:
     """
     Asynchronously run the given command and log its output as it appears.
@@ -174,6 +181,7 @@ async def aexecute(
         stdout_level:
         stderr_level: Logging levels for the specific output.
         prefix: A string that is prepended to each line before logging.
+        kwargs: Additional keyword arguments to be passed to [asyncio.create_subprocess_exec][asyncio.create_subprocess_exec]
     Returns:
         the command’s exit code
     """
@@ -183,7 +191,7 @@ async def aexecute(
     stderr_cb = _prepare_output(
         stderr, default_name=cmd[0], default_level=stderr_level, prefix=prefix
     )
-    return await _stream_subprocess(cmd, stdout_cb, stderr_cb, cwd=cwd)
+    return await _stream_subprocess(cmd, stdout_cb, stderr_cb, cwd=cwd, **kwargs)
 
 
 T = TypeVar("T")
