@@ -1,23 +1,40 @@
+# yaml-language-server: $schema=https://squidfunk.github.io/mkdocs-material/schema.json
 site_name: logproc – Run programs and log their output
-theme: readthedocs
+site_url: https://thvitt.github.io
+repo_url: https://github.com/thvitt/logproc
+theme:
+  name: material
+  palette:
+    scheme: default
+    primary: grey
+    accent: red
+  features:
+    - search.highlight
+    - search.suggest
+    - navigation.tracking
 plugins:
-  search:
-  autorefs:
-  mkdocstrings:
-    handlers:
-      python:
-        inventories:
-          - url: https://docs.python.org/3/objects.inv
-        options:
-          show_root_heading: true
-          show_symbol_type_heading: false
-          show_source: false
-          show_if_no_docstring: false
-          show_labels: true
-          summary: true
-          docstring_section_style: list
-          signature_crossrefs: true
-          modernize_annotations: true
+  - search
+  - autorefs
+  - mkdocstrings:
+      handlers:
+        python:
+          inventories:
+            - url: https://docs.python.org/3/objects.inv
+          options:
+            backlinks: true
+            show_root_heading: false
+            # show_symbol_type_heading: true
+            # show_symbol_type_toc: true
+            separate_signature: true
+            show_signature_annotations: false
+            line_length: 60
+            show_source: false
+            show_if_no_docstring: false
+            show_labels: true
+            summary: true
+            docstring_section_style: list
+            signature_crossrefs: true
+            modernize_annotations: true
 markdown_extensions:
   pymdownx.snippets:
     check_paths: true

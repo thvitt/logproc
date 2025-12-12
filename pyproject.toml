@@ -21,8 +21,10 @@ dev = [
     "pytest-coverage>=0.0",
 ]
 docs = [
+    "mkdocs-material>=9.7.0",
     "mkdocstrings[python]>=0.30.0",
     "pymdown-extensions>=10.16",
+    "ruff>=0.14.9",
 ]
 
 [tool.tox]
