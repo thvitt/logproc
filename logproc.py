@@ -20,16 +20,16 @@ from collections.abc import (
     Iterable,
     Sequence,
 )
+from typing import TypeAlias, TypeVar
 
 try:
     from os import process_cpu_count
 except ImportError:
     from os import cpu_count as process_cpu_count  # n/a in python < 3.13
-from typing import TypeVar
 
-OutputCallback = Callable[[str | bytes], None]
-LoggerSpec = str | logging.Logger | None
-OutputHandler = OutputCallback | LoggerSpec
+OutputCallback: TypeAlias = Callable[[str | bytes], None]
+LoggerSpec: TypeAlias = str | logging.Logger | None
+OutputHandler: TypeAlias = OutputCallback | LoggerSpec
 
 
 def proc_logger(
